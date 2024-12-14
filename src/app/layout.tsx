@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
+import Nav from "@/components/Nav";
+import {CardExample} from "@/components/CardExample";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,14 +30,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-          >
-              {children}
-          </ThemeProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <div
+          className="grid grid-rows-[20px_1fr_min-content] items-center justify-items-center min-h-screen sm:p-20 font-[family-name:var(--font-geist-sans)]">
+          <div>
+            navbar
+          </div>
+          <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+            {children}
+
+          </main>
+          <Nav/>
+        </div>
+      </ThemeProvider>
       </body>
     </html>
   );
