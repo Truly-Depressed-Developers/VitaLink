@@ -6,13 +6,15 @@ export default function Header({ isHomePage }: { isHomePage: boolean }) {
       {isHomePage ? (
         <>
           <h1 className="text-center text-xl font-bold">VitaLink</h1>
-          <Avatar className="absolute right-4 top-4 h-5 w-5">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          </Avatar>
         </>
       ) : (
-        <h1 className="text-center text-xl font-bold">VitaLink</h1>
+        <>
+          <h1 className="text-center text-xs font-bold">VitaLink</h1>
+        </>
       )}
+      <Avatar className="absolute right-4 top-4 h-5 w-5">
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      </Avatar>
     </div>
   );
 }
