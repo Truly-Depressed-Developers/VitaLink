@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function UnitValue({value, unit}: { value: number; unit: string }) {
+export function UnitValue({value, unit}: { value: string; unit: string }) {
   return (
     <p>
       <span className="text-2xl mr-2">{value}</span>
