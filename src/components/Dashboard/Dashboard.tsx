@@ -4,13 +4,13 @@ import { Plus } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <Screen>
-      <div className="flex flex-col space-y-4 p-4">
-        {[...Array(3)].map((_, i) => (
+    <Screen title="Twoi podopieczni" className="min-h-[90vh]">
+      <div className="flex flex-col space-y-4">
+        {[...Array(4)].map((_, i) => (
           <PersonCard key={i} />
         ))}
       </div>
-      <button className="float-right mr-4 rounded-full bg-primary p-3">
+      <button className="fixed bottom-4 right-4 rounded-full bg-primary p-3">
         <Plus />
       </button>
     </Screen>
