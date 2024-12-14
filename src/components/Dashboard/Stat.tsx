@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
-
-type State = "good" | "mediocre" | "bad";
+import { State } from "./utils";
 
 type Stat = {
   value: string;
