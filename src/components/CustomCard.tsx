@@ -13,13 +13,13 @@ type Props = {
 
 export function CustomCard(props: Props) {
   return (
-    <Card className={cn("border-none bg-[#1D1D1D] p-3 pb-0", props.className)}>
+    <Card className={cn("border-none bg-[#1D1D1D] p-3", props.className)}>
       <CardHeader className="p-0">
         <CardTitle className={cn("text-sm font-normal", props.titleClassName)}>
           {props.title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-3">{props.children}</CardContent>
+      <CardContent className="p-0 pt-3">{props.children}</CardContent>
     </Card>
   );
 }
