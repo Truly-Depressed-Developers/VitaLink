@@ -2,14 +2,15 @@ import { Screen } from "@/components/Screen";
 import PersonCard from "./PersonCard";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { people } from "@/lib/data";
 
 export default function Dashboard() {
   return (
     <Screen title="Twoi podopieczni" className="min-h-[90vh]">
       <div className="flex flex-col space-y-4">
-        {[...Array(4)].map((_, i) => (
-          <Link href={`/person/${i}`} key={i} prefetch>
-            <PersonCard />
+        {people.map((person) => (
+          <Link href={`/person/${person.id}`} key={person.id} prefetch>
+            <PersonCard {...person} />
           </Link>
         ))}
       </div>

@@ -1,22 +1,32 @@
 import Stat from "./Stat";
 import { CustomCard } from "@/components/CustomCard";
 import { DetermineColor } from "./utils";
+import { Person } from "@/lib/utils";
 
-export default function PersonCard() {
+export default function PersonCard({
+  name,
+  heartRate,
+  bloodPressure,
+  sleepScore,
+}: Person) {
   return (
-    <CustomCard title="Babcia Krysia" titleClassName="text-base">
+    <CustomCard title={name} titleClassName="text-base">
       <div className="mb-[1.125px] flex justify-around text-center">
         <Stat
-          state={DetermineColor(65, "heartRate")}
-          value="65"
+          state={DetermineColor(heartRate, "heartRate")}
+          value={heartRate.toString()}
           label="Śr. tętno"
         />
         <Stat
-          state={DetermineColor(155, "pressure")}
-          value="155/90"
+          state={DetermineColor(bloodPressure, "pressure")}
+          value={bloodPressure.toString() + "/90"}
           label="Śr. ciśnienie"
         />
-        <Stat state={DetermineColor(45, "sleepTime")} value="45" label="Sen" />
+        <Stat
+          state={DetermineColor(sleepScore, "sleepTime")}
+          value={sleepScore.toString()}
+          label="Sen"
+        />
       </div>
     </CustomCard>
   );

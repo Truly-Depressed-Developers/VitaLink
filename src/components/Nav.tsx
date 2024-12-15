@@ -15,7 +15,7 @@ const Nav = () => {
 
   return (
     <div className="fixed bottom-0 z-40 h-[7vh] w-full">
-      <div className="flex justify-evenly bg-[#1D1D1D] py-2 shadow-md">
+      <div className="flex justify-evenly bg-[#1D1D1D] py-2 shadow-xl shadow-[#1D1D1D]">
         <Link
           href={`/person/${id}`}
           className="flex flex-col items-center space-y-0.5"

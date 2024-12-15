@@ -4,9 +4,13 @@ import Link from "next/link";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { ArrowLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { people } from "@/lib/data";
 
 export default function Header({ isHomePage }: { isHomePage: boolean }) {
   const id = usePathname().split("/")[2];
+  const name = people.find((person) => person.id === id)?.name;
+
+  console.log(id);
 
   return (
     <div className="h-[10vh] p-4">
@@ -21,9 +25,7 @@ export default function Header({ isHomePage }: { isHomePage: boolean }) {
             Powrót
           </Link>
 
-          <h1 className="absolute left-1/2 top-10 -translate-x-1/2">
-            Osoba {id}
-          </h1>
+          <h1 className="absolute left-1/2 top-10 -translate-x-1/2">{name}</h1>
           <h1 className="text-center text-xs font-bold">VitaLink</h1>
         </>
       )}

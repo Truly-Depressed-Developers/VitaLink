@@ -11,8 +11,8 @@ export default async function Page({
   params: Promise<{ personId: string }>;
 }) {
   const personId = (await params).personId;
-
   console.log(personId);
+
   return (
     <>
       <div className="flex flex-col space-y-4">
