@@ -2,11 +2,11 @@ import * as React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import {Clock8} from "lucide-react";
 
 type Props = {
   className?: string;
   titleClassName?: string;
+  titleConditionalStyles?: Record<string, boolean>;
   title: string;
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -18,7 +18,13 @@ export function CustomCard(props: Props) {
       <CardHeader className="p-0">
         <div className="flex gap-2">
           {props.icon}
-          <CardTitle className={cn("text-sm font-normal", props.titleClassName)}>
+          <CardTitle
+            className={cn(
+              "text-sm font-normal",
+              props.titleClassName,
+              props.titleConditionalStyles,
+            )}
+          >
             {props.title}
           </CardTitle>
         </div>

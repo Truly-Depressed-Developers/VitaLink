@@ -12,3 +12,17 @@ export type Person = {
   bloodPressure: number;
   sleepScore: number;
 };
+
+export type Medicine = {
+  name: string;
+  time: string;
+  days: string;
+  active: boolean;
+};
+
+export type Doctors = {
+  name: string;
+  time: string;
+  days: string;
+  active: boolean;
+};

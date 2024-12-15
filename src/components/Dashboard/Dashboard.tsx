@@ -1,7 +1,7 @@
-import { Screen } from "@/components/Screen";
-import PersonCard from "./PersonCard";
-import { Plus } from "lucide-react";
 import Link from "next/link";
+import { Screen } from "@/components/Screen";
+import AddButton from "../AddButton";
+import PersonCard from "./PersonCard";
 import { people } from "@/lib/data";
 
 export default function Dashboard() {
@@ -14,9 +14,7 @@ export default function Dashboard() {
           </Link>
         ))}
       </div>
-      <button className="fixed bottom-4 right-4 rounded-full bg-primary p-3">
-        <Plus />
-      </button>
+      <AddButton />
     </Screen>
   );
 }
