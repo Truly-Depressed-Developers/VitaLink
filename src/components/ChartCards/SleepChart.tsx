@@ -136,29 +136,29 @@ export const SleepChart = () => {
             {">"}
           </a>
         </div>
-        <BarChart
-          width={372}
-          height={200}
-          data={chartData}
-          margin={{ top: 10, bottom: 40, left: -40 }}
-        >
-          <CartesianGrid
-            strokeDasharray="3 3"
-            vertical={false}
-            horizontal={false}
-          />
-          <XAxis
-            dataKey="date"
-            tickFormatter={getTickFormatter(timeframe)}
-            interval={timeframe === "1Y" ? 0 : 0}
-            angle={-90}
-            dy={10}
-            textAnchor="end"
-          />
-          <YAxis interval={0} />
-          <Tooltip content={<SleepChartTooltip />} />
-          <Bar dataKey="value" fill="#bf2c48" />
-        </BarChart>
+<BarChart
+  width={372}
+  height={200}
+  data={chartData}
+  margin={{ top: 10, bottom: 40, left: -40 }}
+>
+  <CartesianGrid
+    strokeDasharray="3 3"
+    vertical={false}
+    horizontal={false}
+  />
+  <XAxis
+    dataKey="date"
+    tickFormatter={getTickFormatter(timeframe)}
+    interval={timeframe === "1M" ? 1 : 0}
+    angle={-90}
+    dy={10}
+    textAnchor="end"
+  />
+  <YAxis interval={0} />
+  <Tooltip content={<SleepChartTooltip />} />
+  <Bar dataKey="value" fill="#3B82F6" />
+</BarChart>
       </div>
       <div className="mt-4 flex h-6 w-full space-x-2 rounded-xl bg-[#343434]">
         <Button

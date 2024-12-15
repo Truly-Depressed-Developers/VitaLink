@@ -13,16 +13,12 @@ export type Person = {
   sleepScore: number;
 };
 
-export type Medicine = {
+export interface Reminder {
   name: string;
   time: string;
   days: string;
   active: boolean;
-};
+}
 
-export type Doctors = {
-  name: string;
-  time: string;
-  days: string;
-  active: boolean;
-};
+export type Medicine = Reminder;
+export type Doctors = Reminder;

@@ -32,10 +32,10 @@ export const people: Person[] = [
 ];
 
 export const medicines: Medicine[] = [
-  { name: "Rutinoscorbin", time: "8:00", days: "Pon, Śr, Pt", active: true },
-  { name: "Absenor", time: "10:00", days: "Codziennie", active: true },
+  { name: "Jedna tabletka Rutinoscorbin", time: "8:00", days: "Pon, Śr, Pt", active: true },
+  { name: "Dwie tabletki Absenor", time: "10:00", days: "Codziennie", active: true },
   {
-    name: "Aciclovir Aurovitas",
+    name: "Jedna tabletka Aciclovir Aurovitas",
     time: "11:00",
     days: "Codziennie",
     active: false,

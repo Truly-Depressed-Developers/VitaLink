@@ -214,7 +214,7 @@ export const HeartRateChart = () => {
           <XAxis
             dataKey="date"
             tickFormatter={getTickFormatter(timeframe)}
-            interval={timeframe === "1M" ? 1 : 0}
+            interval={timeframe === "7D" ? 0 : 1}
             angle={-90}
             dy={10}
             textAnchor="end"
