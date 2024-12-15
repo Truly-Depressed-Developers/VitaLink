@@ -4,7 +4,7 @@ export function Screen({
   title,
 }: {
   children: React.ReactNode;
-  className: string;
+  className?: string;
   title?: string;
 }) {
   return (

@@ -1,4 +1,4 @@
-import { Person } from "./utils";
+import { type Doctors, type Medicine, type Person } from "./utils";
 
 export const people: Person[] = [
   {
@@ -28,5 +28,25 @@ export const people: Person[] = [
     heartRate: 80,
     bloodPressure: 170,
     sleepScore: 60,
+  },
+];
+
+export const medicines: Medicine[] = [
+  { name: "Rutinoscorbin", time: "8:00", days: "Pon, Śr, Pt", active: true },
+  { name: "Absenor", time: "10:00", days: "Codziennie", active: true },
+  {
+    name: "Aciclovir Aurovitas",
+    time: "11:00",
+    days: "Codziennie",
+    active: false,
+  },
+];
+
+export const doctors: Doctors[] = [
+  {
+    name: "Wizyta u neurologa (NFZ)",
+    time: "12:00",
+    days: "Raz, 21.12.2024",
+    active: true,
   },
 ];
