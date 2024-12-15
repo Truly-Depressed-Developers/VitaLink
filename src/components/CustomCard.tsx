@@ -9,7 +9,7 @@ type Props = {
   titleConditionalStyles?: Record<string, boolean>;
   title: string;
   icon?: React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export function CustomCard(props: Props) {
@@ -29,7 +29,9 @@ export function CustomCard(props: Props) {
           </CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="p-0 pt-3">{props.children}</CardContent>
+      {props.children && (
+        <CardContent className="p-0 pt-3">{props.children}</CardContent>
+      )}
     </Card>
   );
 }

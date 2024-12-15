@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import AddButton from "@/components/AddButton";
 import MedicineCard from "@/components/DetailCards/MedicineCard";
