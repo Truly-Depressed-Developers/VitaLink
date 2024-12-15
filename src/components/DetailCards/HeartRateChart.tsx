@@ -2,85 +2,94 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { LineChart, Line, XAxis, CartesianGrid, Tooltip } from "recharts";
+import {Line, XAxis, CartesianGrid, Tooltip, Area, AreaChart} from "recharts";
 import { HeartPulse } from "lucide-react";
-import { format, subDays } from "date-fns";
+import { format, subMinutes, subHours, subDays, startOfHour, startOfMinute, addMinutes } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
+import {HeartRateChartTooltip} from "@/components/DetailCards/HeartRateChartTooltip";
 
-// // Generate data for the last 365 days
-// const generateDailyData = () => {
-//     const data = [];
-//     for (let i = 0; i < 365; i++) {
-//         data.push({
-//             day: format(subDays(new Date(), i), "yyyy-MM-dd"),
-//             value: Math.floor(Math.random() * 100) + 50, // Random value between 50 and 150
-//         });
-//     }
-//     return data.reverse();
-// };
+interface DataPoint {
+    date: Date;
+    value: number;
+}
 
-// const dailyData = generateDailyData();
+// Generate data for the last 30 days every 15 minutes
+const generateQuarterHourlyData = (): DataPoint[] => {
+    const data: DataPoint[] = [];
+    const now = new Date();
+    const start = startOfMinute(addMinutes(now, -now.getMinutes() % 15)); // Align to the nearest 15-minute mark
+    for (let i = 0; i < 30 * 24 * 4; i++) { // 30 days * 24 hours * 4 (15-minute intervals per hour)
+        const date = subMinutes(start, i * 15);
+        data.push({
+            date: date,
+            value: Math.floor(Math.random() * 100) + 50, // Random value between 50 and 150
+        });
+    }
+    return data.reverse();
+};
 
-// Group data by weeks for the month view
-const groupByWeeks = (data: DailyData) => {
-    const weeks = [];
-    for (let i = 0; i < 4; i++) {
-        const weekData = data.slice(i * 7, (i + 1) * 7);
-        const averageValue = weekData.reduce((acc, cur) => acc + cur.value, 0) / weekData.length;
-        weeks.push({
-            date: format(subDays(new Date(), i * 7), "dd.MM"),
+// Group data by hour for the last day
+const groupByHours = (data: DataPoint[]): DataPoint[] => {
+    const hours: DataPoint[] = [];
+    for (let i = 0; i < 24; i++) {
+        const hourStart = startOfHour(subHours(new Date(), i));
+        const hourData = data.filter(d => d.date >= hourStart && d.date < subHours(hourStart, -1));
+        const averageValue = hourData.reduce((acc, cur) => acc + cur.value, 0) / hourData.length;
+        hours.push({
+            date: hourStart,
             value: Math.round(averageValue),
         });
     }
-    return weeks;
+    return hours.reverse();
 };
 
-// Group data by months for the year view
-const groupByMonths = (data: DailyData) => {
-    const months = [];
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    for (let i = 0; i < 12; i++) {
-        const monthData = data.filter(d => new Date(d.day).getMonth() === i);
-        const averageValue = monthData.reduce((acc, cur) => acc + cur.value, 0) / monthData.length;
-        months.push({
-            month: monthNames[i],
-            value: Math.round(averageValue),
-        });
+// Group data by day for the last 30 days
+const groupByDays = (data: DataPoint[], daysCount: number, pointsPerDay: number): DataPoint[] => {
+    const days: DataPoint[] = [];
+    const interval = Math.floor((24 * 60) / pointsPerDay); // Interval in minutes
+
+    for (let i = 0; i < daysCount; i++) {
+        const dayStart = subDays(new Date(), i);
+        for (let j = 0; j < pointsPerDay; j++) {
+            const pointTime = subMinutes(startOfHour(dayStart), j * interval);
+            const pointData = data.filter(d => d.date >= pointTime && d.date < subMinutes(pointTime, -interval));
+            const averageValue = pointData.reduce((acc, cur) => acc + cur.value, 0) / pointData.length;
+            days.push({
+                date: pointTime,
+                value: Math.round(averageValue),
+            });
+        }
     }
-    return months;
+    return days.reverse();
 };
 
+const dayLabels = ["pon", "wto", "śro", "czw", "pią", "sob", "nie"];
 
-const dayLabels = ["pn", "wt", "śr", "czw", "pt", "sob", "nd"];
-const monthLabels = ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"];
-
-const getTickFormatter = (timeframe: "W" | "M" | "Y") => {
+const getTickFormatter = (timeframe: "6H" | "1D" | "7D" | "1M") => {
     switch (timeframe) {
-        case "W":
-            return (tick: unknown, index: number) => dayLabels[index % 7];
-        case "M":
-            return (tick: unknown) => tick;
-        case "Y":
-            return (tick: unknown, index: number) => monthLabels[index];
+        case "6H":
+        case "1D":
+            return (tick: Date) => format(tick, "HH:mm");
+        case "7D":
+            return (tick: Date, index: number) => index % 4 === 0 ? dayLabels[index / 4 % 7] : "";
+        case "1M":
+            return (tick: Date) => format(tick, "dd.MM");
         default:
-            return (tick: unknown) => tick;
+            return (tick: Date) => format(tick, "HH:mm");
     }
 };
 
+export const HeartRateChart = () => {
+    const [timeframe, setTimeframe] = useState<"6H" | "1D" | "7D" | "1M">("6H");
 
-type DailyData = { day: string, value: number }[]
+    const data = generateQuarterHourlyData();
 
-export const HeartRateChart = ({ dailyData }: { dailyData: DailyData }) => {
-    const [timeframe, setTimeframe] = useState<"W" | "M" | "Y">("W");
-
-    const data = {
-        W: dailyData.slice(-7),
-        M: groupByWeeks(dailyData),
-        Y: groupByMonths(dailyData),
-    };
-
-
-    const chartData = data[timeframe];
+    const chartData = {
+        "6H": data.slice(-24), // Last 6 hours every 15 minutes
+        "1D": groupByHours(data),
+        "7D": groupByDays(data, 7, 4), // Last 7 days
+        "1M": groupByDays(data, 30, 1), // Last 30 days
+    }[timeframe];
 
     const average = chartData.reduce((acc, cur) => acc + cur.value, 0) / chartData.length;
     const max = Math.max(...chartData.map(d => d.value));
@@ -97,28 +106,39 @@ export const HeartRateChart = ({ dailyData }: { dailyData: DailyData }) => {
                     <p className="text-xs text-[#929292]">Maksymalne</p>
                 </div>
             </div>
-            <div className="mt-4">
-            <LineChart width={372} height={200} data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                    dataKey={timeframe === "Y" ? "month" : timeframe === "M" ? "date" : "day"}
-                    tickFormatter={getTickFormatter(timeframe)}
-                    interval={0}
-                    padding={{ left: 12, right: 12 }}
-                />
-                <Tooltip />
-                <Line type="monotone" dataKey="value" stroke="#8884d8" />
-            </LineChart>
+            <div className="mt-4 font-mono">
+                <AreaChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40 }}>
+                    <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#bf2c48" stopOpacity={0.8} />
+                            <stop offset="95%" stopColor="#bf2c48" stopOpacity={0.1} />
+                        </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                        dataKey="date"
+                        tickFormatter={getTickFormatter(timeframe)}
+                        interval={timeframe === "1M" ? 1 : 0}
+                        angle={-90}
+                        dy={10}
+                        textAnchor="end"
+                    />
+                    <Tooltip content={<HeartRateChartTooltip />} />
+                    <Area type="monotone" dataKey="value" stroke="#bf2c48" fill="url(#colorValue)" dot={false} />
+                </AreaChart>
             </div>
             <div className="mt-4 flex justify-center space-x-2">
-                <Button variant={timeframe === "W" ? "default" : "outline"} onClick={() => setTimeframe("W")}>
+                <Button variant={timeframe === "6H" ? "default" : "outline"} onClick={() => setTimeframe("6H")}>
+                    6 godzin
+                </Button>
+                <Button variant={timeframe === "1D" ? "default" : "outline"} onClick={() => setTimeframe("1D")}>
+                    Dzień
+                </Button>
+                <Button variant={timeframe === "7D" ? "default" : "outline"} onClick={() => setTimeframe("7D")}>
                     Tydzień
                 </Button>
-                <Button variant={timeframe === "M" ? "default" : "outline"} onClick={() => setTimeframe("M")}>
+                <Button variant={timeframe === "1M" ? "default" : "outline"} onClick={() => setTimeframe("1M")}>
                     Miesiąc
-                </Button>
-                <Button variant={timeframe === "Y" ? "default" : "outline"} onClick={() => setTimeframe("Y")}>
-                    Rok
                 </Button>
             </div>
         </CustomCard>
