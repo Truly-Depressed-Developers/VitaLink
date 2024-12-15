@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { XAxis, CartesianGrid, Tooltip, Bar, BarChart } from "recharts";
+import {XAxis, CartesianGrid, Tooltip, Bar, BarChart, YAxis} from "recharts";
 import { Clock8 } from "lucide-react";
 import { format, subDays, addDays, startOfMonth, addMonths } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
@@ -118,8 +118,8 @@ export const SleepChart = () => {
                     <p className="text-xs text-[#929292]">{getDateRange()}</p>
                     <a className="text-[#929292] cursor-pointer" onClick={handleNext}>{">"}</a>
                 </div>
-                <BarChart width={372} height={200} data={chartData} margin={{top: 10, bottom: 40}}>
-                    <CartesianGrid strokeDasharray="3 3"/>
+                <BarChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40, left: -40 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} horizontal={false} />
                     <XAxis
                         dataKey="date"
                         tickFormatter={getTickFormatter(timeframe)}
@@ -128,6 +128,7 @@ export const SleepChart = () => {
                         dy={10}
                         textAnchor="end"
                     />
+                    <YAxis interval={0} />
                     <Tooltip content={<SleepChartTooltip />} />
                     <Bar dataKey="value" fill="#bf2c48" />
                 </BarChart>

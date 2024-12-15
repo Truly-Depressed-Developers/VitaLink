@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { XAxis, CartesianGrid, Tooltip, Area, AreaChart } from "recharts";
+import {XAxis, CartesianGrid, Tooltip, Area, AreaChart, YAxis} from "recharts";
 import { HeartPulse } from "lucide-react";
 import { format, subMinutes, subHours, subDays, startOfHour, startOfMinute, addMinutes, addDays, addHours } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
@@ -135,25 +135,26 @@ export const HeartRateChart = () => {
                         </>
                     }
                 </div>
-                <AreaChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40 }}>
-                    <defs>
-                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#bf2c48" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#bf2c48" stopOpacity={0.1} />
-                        </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                        dataKey="date"
-                        tickFormatter={getTickFormatter(timeframe)}
-                        interval={timeframe === "1M" ? 1 : 0}
-                        angle={-90}
-                        dy={10}
-                        textAnchor="end"
-                    />
-                    <Tooltip content={<HeartRateChartTooltip />} />
-                    <Area type="monotone" dataKey="value" stroke="#bf2c48" fill="url(#colorValue)" dot={false} />
-                </AreaChart>
+                <AreaChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40, left: -25 }}>
+                <defs>
+                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#bf2c48" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#bf2c48" stopOpacity={0.1} />
+                    </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} horizontal={false} />
+                <XAxis
+                    dataKey="date"
+                    tickFormatter={getTickFormatter(timeframe)}
+                    interval={timeframe === "1M" ? 1 : 0}
+                    angle={-90}
+                    dy={10}
+                    textAnchor="end"
+                />
+                <YAxis interval={0} domain={[40, 'auto']} />
+                <Tooltip content={<HeartRateChartTooltip />} />
+                <Area type="monotone" dataKey="value" stroke="#bf2c48" fill="url(#colorValue)" dot={false} />
+            </AreaChart>
             </div>
             <div className="mt-4 flex justify-center space-x-2">
                 <Button variant={timeframe === "6H" ? "default" : "outline"} onClick={() => setTimeframe("6H")}>
