@@ -6,7 +6,7 @@ import { XAxis, CartesianGrid, Tooltip, Area, AreaChart } from "recharts";
 import { HeartPulse } from "lucide-react";
 import { format, subMinutes, subHours, subDays, startOfHour, startOfMinute, addMinutes, addDays, addHours } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
-import { HeartRateChartTooltip } from "@/components/DetailCards/HeartRateChartTooltip";
+import { HeartRateChartTooltip } from "@/components/ChartCards/HeartRateChartTooltip";
 
 interface DataPoint {
     date: Date;
@@ -126,15 +126,15 @@ export const HeartRateChart = () => {
                 </div>
             </div>
             <div className="mt-4 font-mono">
-                    <div className="flex justify-center items-center mb-2 h-4 gap-2">
-                        { timeframe != "6H" &&
-                            <>
-                                <a className="text-[#929292] cursor-pointer" onClick={handlePrevious}>{"<"}</a>
-                                <p className="text-xs text-[#929292]">{getDateRange()}</p>
-                                <a className="text-[#929292] cursor-pointer" onClick={handleNext}>{">"}</a>
-                            </>
-                        }
-                    </div>
+                <div className="flex justify-center items-center mb-2 h-4 gap-2">
+                    { timeframe != "6H" &&
+                        <>
+                            <a className="text-[#929292] cursor-pointer" onClick={handlePrevious}>{"<"}</a>
+                            <p className="text-xs text-[#929292]">{getDateRange()}</p>
+                            <a className="text-[#929292] cursor-pointer" onClick={handleNext}>{">"}</a>
+                        </>
+                    }
+                </div>
                 <AreaChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40 }}>
                     <defs>
                         <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">

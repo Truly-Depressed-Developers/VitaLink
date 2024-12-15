@@ -1,4 +1,5 @@
-import HeartRateChart from "@/components/DetailCards/HeartRateChart";
+import HeartRateChart from "@/components/ChartCards/HeartRateChart";
+import SleepChart from "@/components/ChartCards/SleepChart";
 
 export default async function Page({
   params,
@@ -9,7 +10,8 @@ export default async function Page({
 
   console.log(personId);
 
-  return <div>
-    <HeartRateChart />
+  return <div className="flex flex-col space-y-4">
+    <HeartRateChart/>
+    <SleepChart/>
   </div>;
 }
