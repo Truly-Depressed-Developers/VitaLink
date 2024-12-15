@@ -3,7 +3,6 @@
 import * as React from "react"
 
 import { Progress } from "@/components/ui/progress"
-import {Card} from "@/components/ui/card";
 import {UnitValue} from "@/components/UnitValue";
 import {CustomCard} from "@/components/CustomCard";
 import {Clock8} from "lucide-react";

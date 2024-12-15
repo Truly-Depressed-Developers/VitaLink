@@ -4,6 +4,7 @@ import * as React from "react"
 
 import {UnitValue} from "@/components/UnitValue";
 import {CustomCard} from "@/components/CustomCard";
+import {HeartPulse} from "lucide-react";
 
 const colors = [
   "#3F92FF",
@@ -20,7 +21,7 @@ const maxValue = 200;
 export function HeartRateCard({value}: { value: number }) {
   const percent = Math.min(Math.max(((value - minValue) / (maxValue - minValue)) * 100, 0), 100);
 
-  return <CustomCard title={"Tętno"}>
+  return <CustomCard title={"Tętno"} icon={<HeartPulse size={18}/>}>
     <UnitValue value={value.toString()} unit="BPM"/>
     <div className="relative">
       <div className="flex w-full gap-1">
