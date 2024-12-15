@@ -1,9 +1,10 @@
-import { HeartRateCard } from "@/components/HeartRateCard";
-import { SleepTimeCard } from "@/components/SleepTimeCard";
+import { HeartRateCard } from "@/components/DetailCards/HeartRateCard";
+import { SleepTimeCard } from "@/components/DetailCards/SleepTimeCard";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import {BloodSaturationCard} from "@/components/BloodSaturationCard";
-import {BloodPressureCard} from "@/components/BloodPressureCard";
+import {BloodSaturationCard} from "@/components/DetailCards/BloodSaturationCard";
+import {BloodPressureCard} from "@/components/DetailCards/BloodPressureCard";
+import {StepsCard} from "@/components/DetailCards/StepsCard";
 
 export default async function Page({
   params,
@@ -27,6 +28,7 @@ export default async function Page({
             <BloodPressureCard value="140/80" />
         </div>
         <SleepTimeCard from="23:45" to="7:25" />
+        <StepsCard steps={2137} />
       </div>
     </>
   );
