@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Header isHomePage />
-      <main>
+      <main className="p-4">
         <Dashboard />
       </main>
     </>

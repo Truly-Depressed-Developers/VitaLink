@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       <Header isHomePage={false} />
-      <main>{children}</main>
+      <main className="h-[83vh] overflow-y-auto p-4">{children}</main>
       <Nav />
     </>
   );

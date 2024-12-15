@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
       >
-        <div className="flex min-h-screen flex-col justify-between p-4 font-[family-name:var(--font-geist-sans)]">
+        <div className="flex flex-col justify-between font-[family-name:var(--font-geist-sans)]">
           {children}
         </div>
       </body>
