@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {Line, XAxis, CartesianGrid, Tooltip, Area, AreaChart} from "recharts";
+import { XAxis, CartesianGrid, Tooltip, Area, AreaChart } from "recharts";
 import { HeartPulse } from "lucide-react";
-import { format, subMinutes, subHours, subDays, startOfHour, startOfMinute, addMinutes } from "date-fns";
+import { format, subMinutes, subHours, subDays, startOfHour, startOfMinute, addMinutes, addDays, addHours } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
-import {HeartRateChartTooltip} from "@/components/DetailCards/HeartRateChartTooltip";
+import { HeartRateChartTooltip } from "@/components/DetailCards/HeartRateChartTooltip";
 
 interface DataPoint {
     date: Date;
@@ -80,7 +80,8 @@ const getTickFormatter = (timeframe: "6H" | "1D" | "7D" | "1M") => {
 };
 
 export const HeartRateChart = () => {
-    const [timeframe, setTimeframe] = useState<"6H" | "1D" | "7D" | "1M">("6H");
+    const [timeframe, setTimeframe] = useState<"6H" | "1D" | "7D" | "1M">("1D");
+    const [startDate, setStartDate] = useState(new Date());
 
     const data = generateQuarterHourlyData();
 
@@ -93,6 +94,24 @@ export const HeartRateChart = () => {
 
     const average = chartData.reduce((acc, cur) => acc + cur.value, 0) / chartData.length;
     const max = Math.max(...chartData.map(d => d.value));
+
+    const getDateRange = () => {
+        const endDate = {
+            "6H": addHours(startDate, 6),
+            "1D": addDays(startDate, 1),
+            "7D": addDays(startDate, 7),
+            "1M": addDays(startDate, 30),
+        }[timeframe];
+        return `${format(startDate, "dd.MM.yyyy")} - ${format(endDate, "dd.MM.yyyy")}`;
+    };
+
+    const handlePrevious = () => {
+        setStartDate(subDays(startDate, timeframe === "6H" ? 1 : timeframe === "1D" ? 1 : timeframe === "7D" ? 7 : 30));
+    };
+
+    const handleNext = () => {
+        setStartDate(addDays(startDate, timeframe === "6H" ? 1 : timeframe === "1D" ? 1 : timeframe === "7D" ? 7 : 30));
+    };
 
     return (
         <CustomCard title="Tętno" icon={<HeartPulse size={18} />}>
@@ -107,6 +126,15 @@ export const HeartRateChart = () => {
                 </div>
             </div>
             <div className="mt-4 font-mono">
+                    <div className="flex justify-center items-center mb-2 h-4 gap-2">
+                        { timeframe != "6H" &&
+                            <>
+                                <a className="text-[#929292] cursor-pointer" onClick={handlePrevious}>{"<"}</a>
+                                <p className="text-xs text-[#929292]">{getDateRange()}</p>
+                                <a className="text-[#929292] cursor-pointer" onClick={handleNext}>{">"}</a>
+                            </>
+                        }
+                    </div>
                 <AreaChart width={372} height={200} data={chartData} margin={{ top: 10, bottom: 40 }}>
                     <defs>
                         <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
