@@ -11,7 +11,7 @@ export default async function Page({
   console.log(personId);
 
   return <div className="flex flex-col space-y-4">
-    <HeartRateChart/>
+    <HeartRateChart personId={personId}/>
     <SleepChart/>
   </div>;
 }

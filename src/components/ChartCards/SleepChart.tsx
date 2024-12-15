@@ -13,7 +13,6 @@ interface DataPoint {
   value: number;
 }
 
-// Generate data for the last 365 days
 const generateDailyData = (): DataPoint[] => {
   const data: DataPoint[] = [];
   const now = new Date();
@@ -21,23 +20,20 @@ const generateDailyData = (): DataPoint[] => {
     const date = subDays(now, i);
     data.push({
       date: date,
-      value: Math.random() * 4 + 4, // Random value between 6 and 10 hours
+      value: Math.random() * 4 + 4,
     });
   }
   return data.reverse();
 };
 
-// Group data by day for the last 7 days
 const groupByDays = (data: DataPoint[], daysCount: number): DataPoint[] => {
   return data.slice(-daysCount);
 };
 
-// Group data by month for the last 30 days
 const groupByMonth = (data: DataPoint[]): DataPoint[] => {
   return data.slice(-30);
 };
 
-// Group data by year for the last 365 days, showing average sleep for each month
 const groupByYear = (data: DataPoint[]): DataPoint[] => {
   const months: DataPoint[] = [];
   for (let i = 0; i < 12; i++) {

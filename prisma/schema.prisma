@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id            String    @id @default(cuid())
+  name          String
+  heartRate     Int
+  bloodPressure Int
+  sleepScore    Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  medicines     Medicine[]
+  doctors       Doctor[]
+  healthData    HealthData[]
+}
+
+model Medicine {
+  id        String   @id @default(cuid())
+  name      String
+  time      String
+  days      String
+  active    Boolean  @default(true)
+  personId  String
+  person    Person   @relation(fields: [personId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Doctor {
+  id        String   @id @default(cuid())
+  name      String
+  time      String
+  days      String
+  active    Boolean  @default(true)
+  personId  String
+  person    Person   @relation(fields: [personId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HealthData {
+  id            String   @id @default(cuid())
+  personId      String
+  person        Person   @relation(fields: [personId], references: [id])
+  date          DateTime
+  heartRate     Int
+  bloodPressure Int
+  bloodOxygen   Int
+  sleepStart    DateTime
+  sleepEnd      DateTime
+  deepSleep     Int
+  totalSleep    Int
+  steps         Int
+  createdAt     DateTime @default(now())
+}

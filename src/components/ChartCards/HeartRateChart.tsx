@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   XAxis,
@@ -24,29 +24,27 @@ import {
 } from "date-fns";
 import { CustomCard } from "@/components/CustomCard";
 import { HeartRateChartTooltip } from "@/components/ChartCards/HeartRateChartTooltip";
+import { getHealthData } from "@/lib/actions";
 
 interface DataPoint {
   date: Date;
   value: number;
 }
 
-// Generate data for the last 30 days every 15 minutes
 const generateQuarterHourlyData = (): DataPoint[] => {
   const data: DataPoint[] = [];
   const now = new Date();
-  const start = startOfMinute(addMinutes(now, -now.getMinutes() % 15)); // Align to the nearest 15-minute mark
+  const start = startOfMinute(addMinutes(now, -now.getMinutes() % 15));
   for (let i = 0; i < 30 * 24 * 4; i++) {
-    // 30 days * 24 hours * 4 (15-minute intervals per hour)
     const date = subMinutes(start, i * 15);
     data.push({
       date: date,
-      value: Math.floor(Math.random() * 100) + 50, // Random value between 50 and 150
+      value: Math.floor(Math.random() * 100) + 50,
     });
   }
   return data.reverse();
 };
 
-// Group data by hour for the last day
 const groupByHours = (data: DataPoint[]): DataPoint[] => {
   const hours: DataPoint[] = [];
   for (let i = 0; i < 24; i++) {
@@ -64,15 +62,13 @@ const groupByHours = (data: DataPoint[]): DataPoint[] => {
   return hours.reverse();
 };
 
-// Group data by day for the last 30 days
 const groupByDays = (
   data: DataPoint[],
   daysCount: number,
   pointsPerDay: number,
 ): DataPoint[] => {
   const days: DataPoint[] = [];
-  const interval = Math.floor((24 * 60) / pointsPerDay); // Interval in minutes
-
+  const interval = Math.floor((24 * 60) / pointsPerDay);
   for (let i = 0; i < daysCount; i++) {
     const dayStart = subDays(new Date(), i);
     for (let j = 0; j < pointsPerDay; j++) {
@@ -108,17 +104,31 @@ const getTickFormatter = (timeframe: "6H" | "1D" | "7D" | "1M") => {
   }
 };
 
-export const HeartRateChart = () => {
+export const HeartRateChart = ({ personId }: { personId: string }) => {
+  const [localData, setLocalData] = useState<DataPoint[]>([]);
   const [timeframe, setTimeframe] = useState<"6H" | "1D" | "7D" | "1M">("1D");
+  
+  useEffect(() => {
+      const fetchData = async () => {
+      const healthData = await getHealthData(personId);
+      const formattedData = healthData.map((d: any) => ({
+          date: d.date,
+          value: d.heartRate
+      }));
+      setLocalData(formattedData);
+      };
+      fetchData();
+  }, [personId]);
+
   const [startDate, setStartDate] = useState(new Date());
 
   const data = generateQuarterHourlyData();
 
   const chartData = {
-    "6H": data.slice(-24), // Last 6 hours every 15 minutes
-    "1D": groupByHours(data),
-    "7D": groupByDays(data, 7, 4), // Last 7 days
-    "1M": groupByDays(data, 30, 1), // Last 30 days
+    "6H": localData.slice(-24),
+    "1D": groupByHours(localData),
+    "7D": groupByDays(localData, 7, 4), 
+    "1M": groupByDays(localData, 30, 1), 
   }[timeframe];
 
   const average =

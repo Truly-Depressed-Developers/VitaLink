@@ -1,10 +1,7 @@
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Button} from "@/components/ui/button";
-import {cn, Reminder} from "@/lib/utils";
-import {CalendarIcon, Check, ChevronRight} from "lucide-react";
-import {format} from "date-fns";
-import {Calendar} from "@/components/ui/calendar";
-import {ChangeEvent, useState} from "react";
+import {cn} from "@/lib/utils";
+import {Check, ChevronRight} from "lucide-react";
 import {Checkbox} from "@/components/ui/checkbox";
 
 export const dayNames = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"];

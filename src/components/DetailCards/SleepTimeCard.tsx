@@ -8,6 +8,7 @@ import {CustomCard} from "@/components/CustomCard";
 import {Clock8} from "lucide-react";
 
 export function SleepTimeCard({from, to}: {from: string, to: string}) {
+  if (!from || !to) return
   return <CustomCard title={"Czas snu"} icon={<Clock8 size={18}/>}>
     <UnitValue value={calculateTimeDifference(from, to)} unit="h"/>
     <Progress value={100} className="w-full h-2"/>
@@ -29,7 +30,7 @@ function calculateTimeDifference(from: string, to: string): string {
 
   let diff = toDate.getTime() - fromDate.getTime();
   if (diff < 0) {
-    diff += 24 * 60 * 60 * 1000; // add 24 hours if the difference is negative
+    diff += 24 * 60 * 60 * 1000;
   }
 
   const hours = Math.floor(diff / (1000 * 60 * 60));

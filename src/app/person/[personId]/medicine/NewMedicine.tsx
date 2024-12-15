@@ -34,7 +34,7 @@ export const NewMedicine = ({ onPicked } : {onPicked: (choice: Reminder | null) 
                 {
                     name,
                     time: defaultTime,
-                    days: date ? `Raz, ${format(date, "dd:MM:yyyy")}` : dayNames.filter((_, i) => days.includes(i)).map(name => name.slice(0, 3)).join(", "),
+                    days: date ? `Raz, ${format(date, "dd:MM:yyyy")}` : dayNames.filter((_, i) => days.includes(i)).map((name) => name.slice(0, 3)).join(", "),
                     active: true,
                 }
             )}>

@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Screen } from "@/components/Screen";
 import AddButton from "../AddButton";
 import PersonCard from "./PersonCard";
-import { people } from "@/lib/data";
+import { Person } from "@/lib/utils";
 
-export default function Dashboard() {
+export default function Dashboard({ people }: { people: Person[] }) {
   return (
     <Screen title="Twoi podopieczni" className="min-h-[90vh]">
       <div className="flex flex-col space-y-4">
