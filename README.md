@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## VitaLink
 
-## Getting Started
+Innovative app that keeps seniors safe by tracking their health, sending reminders, and alerting caregivers in case of emergencies.
 
-First, run the development server:
+## Motivation
+
+**VitaLink** was created at <a href="https://bitehack.best.krakow.pl/" target="_blank">Bitehack</a> 2024 Hackathon.
+
+- Topic: Konfrontacja z uzależnieniami
+- Timeframe: 14-15.12.2024, 24 hours
+
+## Run on local environment
+
+<span style="color: red;">Requires Node.js 18.17 or later</span>
+
+First, clone the repository and install packages:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Truly-Depressed-Developers/VitaLink
+
+cd VitaLink
+
+pnpm install
+```
+
+Then, run the development server:
+
+```bash
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<center> 
+<h1> Tech Stack </h1>
+<img alt="NEXT.JS" src="https://img.shields.io/badge/Next.js-000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+<img alt="REACTJS" src="https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black"/>
+<img alt="TYPESCRIPT" src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=white"/>
+</br>
+<img alt="TAILWIND" src="https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white"/>
+<img alt="SHADCN" src="https://img.shields.io/badge/shadcn/ui-000000.svg?style=for-the-badge&logo=shadcn/ui&logoColor=white"/>
+</center>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Presentation
 
-## Learn More
+[Presentation](/media/BITEHack%202024.2%20SDD.pptx) </br>
 
-To learn more about Next.js, take a look at the following resources:
+## Authors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [@CALLmeDOMIN](https://github.com/CALLmeDOMIN)
+- [@MSiorr](https://github.com/MSiorr)
+- [@rubikon02](https://github.com/rubikon02)
+- [@Spookyless](https://github.com/Spookyless)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under [MIT](./LICENSE) license.
